@@ -3,25 +3,25 @@ resource "azurerm_virtual_machine" "VM" {
   name                  = each.value.name
   location              = each.value.location
   resource_group_name   = each.value.RGname
-  network_interface_ids = [each.value.NICID] # NIC ID check from GUI NIC
-  vm_size               = "Standard_DS1_v2"
+  network_interface_ids = [data.azurerm_network_interface.NICdata[each.key].id]
+  vm_size               = each.value.VMsize
 
   storage_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
-    version   = "latest"
+    publisher = each.value.publisher
+    offer     = each.value.offer
+    sku       = each.value.sku
+    version   = each.value.version
   }
   storage_os_disk {
-    name              = "myosdisk1"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+    name              = each.value.name_os_disk
+    caching           = each.value.caching
+    create_option     = each.value.create_option
+    managed_disk_type = each.value.managed_disk_type
   }
   os_profile {
-    computer_name  = "hostname"
-    admin_username = "testadmin"
-    admin_password = "Password1234!"
+    computer_name  = each.value.computer_name
+    admin_username = each.value.admin_username
+    admin_password = each.value.admin_password
   }
   os_profile_linux_config {
     disable_password_authentication = false

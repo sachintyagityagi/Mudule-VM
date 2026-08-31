@@ -26,9 +26,15 @@ module "NIC" {
   source     = "../Child/NIC_module"
   nic        = var.NIC
 }
-    
+
 module "VM" {
   depends_on = [module.resource_group, module.Vnet, module.Subnet, module.NSG, module.NIC]
   source     = "../Child/VM_module"
   vm         = var.VM
+}
+
+module "pip" {
+  depends_on = [module.resource_group, module.Vnet, module.Subnet, module.NSG, module.NIC]
+  source     = "../Child/pip_module"
+  pip        = var.PIP
 }
