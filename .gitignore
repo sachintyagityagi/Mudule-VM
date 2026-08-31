@@ -5,8 +5,8 @@
 crash.log
 override.tf
 override.tf.json
-*.tfvars
-*.tfvars.json
+#*.tfvars
+#*.tfvars.json
 
 # Local IDE files
 *.swp
